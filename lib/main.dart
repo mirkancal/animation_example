@@ -33,27 +33,48 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: AnimatedLogo(animation: animation),
-    );
-  }
-}
-
-class AnimatedLogo extends AnimatedWidget {
-  const AnimatedLogo({
-    Key key,
-    @required this.animation,
-  }) : super(listenable: animation);
-
-  final Animation animation;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: animation.value,
-      width: animation.value,
-      child: FlutterLogo(
-        colors: Colors.red,
+      child: HeartbeatEffect(
+        animation: animation,
+        child: FlutterLogo(),
       ),
     );
   }
 }
+
+class HeartbeatEffect extends StatelessWidget {
+  HeartbeatEffect({this.animation, this.child});
+  final Animation animation;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animation,
+      child: child,
+      builder: (context, child) => Container(
+        height: animation.value,
+        width: animation.value,
+        child: child,
+      ),
+    );
+  }
+}
+
+// class AnimatedLogo extends AnimatedWidget {
+//   const AnimatedLogo({
+//     Key key,
+//     @required this.animation,
+//   }) : super(listenable: animation);
+
+//   final Animation animation;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: animation.value,
+//       width: animation.value,
+//       child: FlutterLogo(
+//         colors: Colors.red,
+//       ),
+//     );
+//   }
+// }
