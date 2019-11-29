@@ -20,6 +20,15 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
       setState(() {});
     });
 
+    animationController.addStatusListener((status) {
+      if (status == AnimationStatus.dismissed) {
+        animationController.forward();
+      }
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      }
+    });
+
     animationController.forward();
     super.initState();
   }
