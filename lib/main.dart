@@ -16,9 +16,6 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     animation =
         Tween<double>(begin: 200.0, end: 400.0).animate(animationController);
-    animationController.addListener(() {
-      setState(() {});
-    });
 
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.dismissed) {
@@ -36,12 +33,26 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        height: animation.value,
-        width: animation.value,
-        child: FlutterLogo(
-          colors: Colors.red,
-        ),
+      child: AnimatedLogo(animation: animation),
+    );
+  }
+}
+
+class AnimatedLogo extends AnimatedWidget {
+  const AnimatedLogo({
+    Key key,
+    @required this.animation,
+  }) : super(listenable: animation);
+
+  final Animation animation;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: animation.value,
+      width: animation.value,
+      child: FlutterLogo(
+        colors: Colors.red,
       ),
     );
   }
